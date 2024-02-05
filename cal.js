@@ -1,47 +1,27 @@
-let currentInput = '';
-let operator = '';
-let previousInput = '';
+let input = document.getElementById('inputBox');
+let buttons = document.querySelectorAll('button');
 
-function appendNumber(number) {
-    currentInput += number;
-    document.getElementById('result').value = currentInput;
-}
-
-function appendOperator(op) {
-    if (currentInput !== '') {
-        operator = op;
-        previousInput = currentInput;
-        currentInput = '';
-    }
-}
-
-function clearScreen() {
-    currentInput = '';
-    operator = '';
-    previousInput = '';
-    document.getElementById('result').value = '';
-}
-
-function calculate() {
-    if (operator !== '' && previousInput !== '' && currentInput !== '') {
-        let result;
-        switch (operator) {
-            case '+':
-                result = parseFloat(previousInput) + parseFloat(currentInput);
-                break;
-            case '-':
-                result = parseFloat(previousInput) - parseFloat(currentInput);
-                break;
-            case '*':
-                result = parseFloat(previousInput) * parseFloat(currentInput);
-                break;
-            case '/':
-                result = parseFloat(previousInput) / parseFloat(currentInput);
-                break;
+let string = "";
+let arr = Array.from(buttons);
+arr.forEach(button => {
+    button.addEventListener('click', (e) =>{
+        if(e.target.innerHTML == '='){
+            string = eval(string);
+            input.value = string;
         }
-        document.getElementById('result').value = result;
-        currentInput = result.toString();
-        operator = '';
-        previousInput = '';
-    }
-}
+
+        else if(e.target.innerHTML == 'AC'){
+            string = "";
+            input.value = string;
+        }
+        else if(e.target.innerHTML == 'DEL'){
+            string = string.substring(0, string.length-1);
+            input.value = string;
+        }
+        else{
+            string += e.target.innerHTML;
+            input.value = string;
+        }
+        
+    })
+})
